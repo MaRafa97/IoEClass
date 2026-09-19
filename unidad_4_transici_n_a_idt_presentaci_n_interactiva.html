@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 4: Transición a IdT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              dark: '#0f172a',
+              light: '#f8fafc',
+              primary: '#0284c7',
+              accent: '#38bdf8',
+              danger: '#ef4444',
+              warning: '#eab308'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body { background-color: #000; margin: 0; overflow: hidden; }
+    .presentation-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    
+    /* El cambio principal: width/height al 100% y overflow-y: auto para permitir scroll */
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s;
+      transform: translateY(20px) scale(0.98);
+      background: white;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 6rem; /* Espacio para que la navegación no tape texto */
+    }
+    
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 10;
+    }
+    
+    .nav-btn { transition: all 0.2s; }
+    .nav-btn:hover { transform: scale(1.1); background-color: rgba(255,255,255,0.2); }
+    
+    /* Animaciones para el simulador dinámico */
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .alert-state { animation: pulse-red 2s infinite; border-color: #ef4444 !important; }
+  </style>
+</head>
+<body class="antialiased text-slate-800">
+
+  <div class="presentation-container">
+    
+    <!-- Controles de Navegación -->
+    <div class="absolute bottom-6 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 pointer-events-none">
+      <div class="text-white opacity-50 font-mono text-sm bg-black/30 px-3 py-1 rounded-full" id="slide-counter">1 / 11</div>
+      <div class="flex gap-4 pointer-events-auto">
+        <button onclick="prevSlide()" class="nav-btn w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white bg-black/30 backdrop-blur-sm">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="nav-btn w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white bg-black/30 backdrop-blur-sm">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="absolute top-0 left-0 h-1 bg-white/20 z-50 w-full">
+      <div id="progress-bar" class="h-full bg-brand-accent transition-all duration-300 w-0"></div>
+    </div>
+
+    <div class="slide active flex flex-col justify-center items-center text-center p-6 md:p-16 bg-brand-dark" id="slide-1">
+      <p class="text-brand-accent font-extrabold text-sm md:text-xl mb-6 tracking-widest uppercase">Fundamentos Teóricos y Prácticos</p>
+      <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight max-w-5xl">Transición a la <br>Industria de las Cosas (IdT)</h1>
+      <p class="text-lg md:text-2xl text-slate-400 max-w-4xl font-semibold leading-relaxed">
+        Evolución de sistemas aislados hacia arquitecturas ciberfísicas interconectadas. Abordaremos la convergencia TI/TO, modelos de segmentación estándar, procesamiento distribuido y defensa en profundidad.
+      </p>
+      <div class="w-24 h-1.5 bg-brand-accent mt-12 rounded-full"></div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="slide-2">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Estructura Temática</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">Ruta de Aprendizaje de la Unidad</h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 flex-grow">
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-sky-100 rounded-xl flex items-center justify-center text-brand-primary text-2xl mb-4 md:mb-6"><i class="fa-solid fa-code-merge"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3 md:mb-4">1. Convergencia TI/TO</h3>
+          <p class="text-slate-600 text-base md:text-lg flex-grow">Análisis del choque de paradigmas entre el determinismo físico de las operaciones y la gestión asíncrona de datos empresariales. Unificación de protocolos de comunicación.</p>
+        </div>
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-sky-100 rounded-xl flex items-center justify-center text-brand-primary text-2xl mb-4 md:mb-6"><i class="fa-solid fa-sitemap"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3 md:mb-4">2. Arquitectura de Red y Modelo Purdue</h3>
+          <p class="text-slate-600 text-base md:text-lg flex-grow">Diseño topológico basado en ISA-95/ISA-62443. Jerarquía de control, segmentación lógica y física, e implementación de Zonas Desmilitarizadas (DMZ) Industriales.</p>
+        </div>
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-sky-100 rounded-xl flex items-center justify-center text-brand-primary text-2xl mb-4 md:mb-6"><i class="fa-solid fa-microchip"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3 md:mb-4">3. Modelos de Procesamiento IdT</h3>
+          <p class="text-slate-600 text-base md:text-lg flex-grow">Estrategias de despliegue computacional: Edge Computing para decisiones de latencia ultrabaja, y Cloud Computing para entrenamiento de modelos y analítica masiva.</p>
+        </div>
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-sky-100 rounded-xl flex items-center justify-center text-brand-primary text-2xl mb-4 md:mb-6"><i class="fa-solid fa-shield-virus"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3 md:mb-4">4. Ciberseguridad Industrial</h3>
+          <p class="text-slate-600 text-base md:text-lg flex-grow">Mitigación de vulnerabilidades estructurales en protocolos heredados (Modbus, DNP3). Aplicación del concepto "Defensa en Profundidad" ante nuevas amenazas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-white" id="slide-3">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Bases Conceptuales</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">El Paradigma de la Convergencia TI/TO</h2>
+
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 h-full">
+        <!-- TO Column -->
+        <div class="flex-1 bg-slate-50 p-6 md:p-10 rounded-2xl border-t-8 border-brand-primary flex flex-col">
+          <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-6 border-b-2 border-slate-200 pb-4">Tecnología Operativa (TO)</h3>
+          <ul class="space-y-6 md:space-y-8 mt-2 md:mt-4 flex-grow">
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-stopwatch text-brand-primary"></i> Determinismo Estricto</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">Los sistemas físicos requieren tiempos de respuesta garantizados y predecibles (latencia en milisegundos). Un retraso en una válvula puede causar fallos catastróficos.</p>
+            </li>
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-gears text-brand-primary"></i> Hardware Específico</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">Uso intensivo de Controladores Lógico Programables (PLCs), Unidades Terminales Remotas (RTUs) y sistemas SCADA con ciclos de vida de 15 a 20 años.</p>
+            </li>
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-lock text-brand-primary"></i> Seguridad Física Prioritaria</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">La prioridad no es la confidencialidad de los datos, sino la disponibilidad del sistema y la seguridad humana (Safety).</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- TI Column -->
+        <div class="flex-1 bg-slate-50 p-6 md:p-10 rounded-2xl border-t-8 border-indigo-500 flex flex-col">
+          <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-6 border-b-2 border-slate-200 pb-4">Tecnologías de Información (TI)</h3>
+          <ul class="space-y-6 md:space-y-8 mt-2 md:mt-4 flex-grow">
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-network-wired text-indigo-500"></i> Procesamiento Asíncrono</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">Gestión masiva de datos y transacciones (ERP, CRM) donde la latencia variable y ocasional son tolerables sin riesgo de destrucción física.</p>
+            </li>
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-server text-indigo-500"></i> Estandarización y Escalabilidad</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">Infraestructura basada en hardware genérico (servidores, virtualización), redes IP estándar e iteraciones rápidas (ciclos de vida de 3-5 años).</p>
+            </li>
+            <li>
+              <h4 class="font-bold text-lg md:text-xl text-brand-dark flex items-center gap-3"><i class="fa-solid fa-user-shield text-indigo-500"></i> Tríada CIA</h4>
+              <p class="text-slate-600 mt-2 text-base md:text-lg">El objetivo principal es la Confidencialidad, Integridad y Disponibilidad de la información corporativa frente a accesos no autorizados.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="slide-4">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 md:mb-10 gap-4">
+        <div>
+          <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Jerarquía de Arquitectura Estándar</p>
+          <h2 class="text-3xl md:text-5xl font-black text-brand-dark">El Modelo Purdue (ISA-95)</h2>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 max-w-md w-full lg:w-auto">
+          <p class="text-xs md:text-sm font-semibold text-slate-600"><i class="fa-solid fa-circle-info text-brand-primary mr-2"></i><strong>El Modelo Purdue</strong> es el estándar de la industria para segmentar arquitecturas empresariales y de control en zonas lógicas para garantizar funcionalidad y seguridad.</p>
+        </div>
+      </div>
+
+      <div class="flex-grow flex flex-col justify-center items-center gap-3 md:gap-4 w-full max-w-5xl mx-auto relative">
+        
+        <!-- Nivel 4/5 -->
+        <div class="w-full bg-blue-50 p-4 md:p-5 rounded-xl border-l-[10px] md:border-l-[16px] border-blue-600 flex justify-between items-center shadow-sm z-10 transition-transform hover:scale-[1.02]">
+          <div class="flex-1">
+            <h3 class="text-lg md:text-2xl font-black text-brand-dark">Nivel 4 / 5: Red Corporativa y Empresarial</h3>
+            <p class="text-sm md:text-lg text-slate-600 mt-1">Sistemas ERP, gestión logística, correo e Internet. Dominio puro de TI.</p>
+          </div>
+          <div class="text-3xl md:text-5xl text-blue-200 ml-4"><i class="fa-solid fa-building"></i></div>
+        </div>
+
+        <!-- DMZ -->
+        <div class="w-[95%] border-b-2 md:border-b-4 border-dashed border-slate-400 my-4 md:my-2 text-right relative h-0 z-0">
+           <span class="absolute right-0 -top-4 md:-top-4 bg-slate-200 text-slate-600 px-3 py-1 rounded-full text-xs md:text-sm font-black tracking-widest shadow-sm">ZONA DESMILITARIZADA (DMZ)</span>
+        </div>
+
+        <!-- Nivel 3 -->
+        <div class="w-full bg-yellow-50 p-4 md:p-5 rounded-xl border-l-[10px] md:border-l-[16px] border-yellow-500 flex justify-between items-center shadow-sm z-10 transition-transform hover:scale-[1.02]">
+          <div class="flex-1">
+            <h3 class="text-lg md:text-2xl font-black text-brand-dark">Nivel 3: Operaciones del Sitio / Fabricación</h3>
+            <p class="text-sm md:text-lg text-slate-600 mt-1">Sistemas de Ejecución de Manufactura (MES). Coordina la producción.</p>
+          </div>
+          <div class="text-3xl md:text-5xl text-yellow-200 ml-4"><i class="fa-solid fa-industry"></i></div>
+        </div>
+
+        <!-- Nivel 2 -->
+        <div class="w-full bg-red-50 p-4 md:p-5 rounded-xl border-l-[10px] md:border-l-[16px] border-red-500 flex justify-between items-center shadow-sm z-10 transition-transform hover:scale-[1.02]">
+          <div class="flex-1">
+            <h3 class="text-lg md:text-2xl font-black text-brand-dark">Nivel 2: Control de Supervisión (SCADA)</h3>
+            <p class="text-sm md:text-lg text-slate-600 mt-1">Sistemas HMI y servidores SCADA que supervisan áreas de la planta.</p>
+          </div>
+          <div class="text-3xl md:text-5xl text-red-200 ml-4"><i class="fa-solid fa-desktop"></i></div>
+        </div>
+
+        <!-- Nivel 1 -->
+        <div class="w-full bg-red-50 p-4 md:p-5 rounded-xl border-l-[10px] md:border-l-[16px] border-red-600 flex justify-between items-center shadow-sm z-10 transition-transform hover:scale-[1.02]">
+          <div class="flex-1">
+            <h3 class="text-lg md:text-2xl font-black text-brand-dark">Nivel 1: Control Básico</h3>
+            <p class="text-sm md:text-lg text-slate-600 mt-1">Controladores lógicos programables (PLCs). Ejecutan la lógica determinista.</p>
+          </div>
+          <div class="text-3xl md:text-5xl text-red-200 ml-4"><i class="fa-solid fa-microchip"></i></div>
+        </div>
+
+        <!-- Nivel 0 -->
+        <div class="w-full bg-red-50 p-4 md:p-5 rounded-xl border-l-[10px] md:border-l-[16px] border-red-700 flex justify-between items-center shadow-sm z-10 transition-transform hover:scale-[1.02]">
+          <div class="flex-1">
+            <h3 class="text-lg md:text-2xl font-black text-brand-dark">Nivel 0: Proceso Físico</h3>
+            <p class="text-sm md:text-lg text-slate-600 mt-1">Sensores, actuadores y robótica. El mundo físico real.</p>
+          </div>
+          <div class="text-3xl md:text-5xl text-red-200 ml-4"><i class="fa-solid fa-gear"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-white" id="slide-5">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Diseño Topológico</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-10 md:mb-16">Arquitectura de Red y Segmentación Lógica</h2>
+
+      <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between px-2 lg:px-10 flex-grow relative gap-8 lg:gap-2">
+        
+        <!-- Línea conectora base (oculta en móvil para que no se superponga raro) -->
+        <div class="hidden lg:block absolute top-1/2 left-20 right-20 h-2 bg-slate-200 -translate-y-1/2 z-0"></div>
+
+        <!-- Component 1: Cloud/Internet -->
+        <div class="flex flex-col items-center gap-4 md:gap-6 z-10 w-full lg:w-64">
+          <div class="w-24 h-24 md:w-32 md:h-32 bg-white border-4 md:border-8 border-slate-300 rounded-full flex justify-center items-center shadow-xl">
+            <i class="fa-solid fa-cloud text-3xl md:text-5xl text-slate-400"></i>
+          </div>
+          <div class="text-center">
+            <h4 class="text-xl md:text-2xl font-black text-brand-dark">Red Externa</h4>
+            <p class="text-xs md:text-sm font-semibold text-slate-500 mt-1 md:mt-2">Nube Pública / Internet.<br>Tráfico no confiable.</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-down lg:hidden text-2xl text-slate-300"></i>
+
+        <!-- Component 2: Firewall TI -->
+        <div class="flex flex-col items-center gap-4 md:gap-6 z-10 w-full lg:w-64">
+          <div class="w-20 h-20 md:w-28 md:h-28 bg-red-50 border-4 md:border-8 border-red-500 rounded-xl flex justify-center items-center shadow-xl transform lg:rotate-45">
+            <i class="fa-solid fa-shield-halved text-2xl md:text-4xl text-red-500 lg:-rotate-45"></i>
+          </div>
+          <div class="text-center mt-2 md:mt-4">
+            <h4 class="text-xl md:text-2xl font-black text-red-600">Firewall Perimetral</h4>
+            <p class="text-xs md:text-sm font-semibold text-slate-500 mt-1 md:mt-2">Inspección de estado IT.<br>Bloqueo externo.</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-down lg:hidden text-2xl text-slate-300"></i>
+
+        <!-- Component 3: DMZ -->
+        <div class="flex flex-col items-center gap-4 md:gap-6 z-10 w-full lg:w-64">
+          <div class="w-24 h-24 md:w-32 md:h-32 bg-yellow-50 border-4 md:border-8 border-yellow-500 rounded-2xl flex justify-center items-center shadow-xl">
+            <i class="fa-solid fa-server text-3xl md:text-5xl text-yellow-600"></i>
+          </div>
+          <div class="text-center">
+            <h4 class="text-xl md:text-2xl font-black text-yellow-600">Zona DMZ Industrial</h4>
+            <p class="text-xs md:text-sm font-semibold text-slate-500 mt-1 md:mt-2">Servidores Proxy.<br>Nadie cruza directo.</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-down lg:hidden text-2xl text-slate-300"></i>
+
+        <!-- Component 4: Firewall TO -->
+        <div class="flex flex-col items-center gap-4 md:gap-6 z-10 w-full lg:w-64">
+          <div class="w-20 h-20 md:w-28 md:h-28 bg-red-50 border-4 md:border-8 border-red-700 rounded-xl flex justify-center items-center shadow-xl transform lg:rotate-45">
+            <i class="fa-solid fa-fire-burner text-2xl md:text-4xl text-red-700 lg:-rotate-45"></i>
+          </div>
+          <div class="text-center mt-2 md:mt-4">
+            <h4 class="text-xl md:text-2xl font-black text-red-700">Firewall Industrial</h4>
+            <p class="text-xs md:text-sm font-semibold text-slate-500 mt-1 md:mt-2">Inspección Profunda de Paquetes.<br>Analiza protocolos TO.</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-down lg:hidden text-2xl text-slate-300"></i>
+
+        <!-- Component 5: Red Operativa -->
+        <div class="flex flex-col items-center gap-4 md:gap-6 z-10 w-full lg:w-64">
+          <div class="w-24 h-24 md:w-32 md:h-32 bg-brand-primary border-4 md:border-8 border-sky-800 rounded-full flex justify-center items-center shadow-xl">
+            <i class="fa-solid fa-industry text-3xl md:text-5xl text-white"></i>
+          </div>
+          <div class="text-center">
+            <h4 class="text-xl md:text-2xl font-black text-brand-primary">Red Operativa (TO)</h4>
+            <p class="text-xs md:text-sm font-semibold text-slate-500 mt-1 md:mt-2">Equipos críticos (Niveles 0-3).<br>Tráfico ultra-restringido.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-dark text-white" id="slide-6">
+      <p class="text-brand-accent font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Estrategias Computacionales</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-8 lg:mb-12">Modelos de Procesamiento en IdT</h2>
+
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 flex-grow">
+        <!-- Edge -->
+        <div class="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md flex flex-col hover:bg-white/10 transition-colors">
+          <div class="flex items-center gap-4 mb-4 md:mb-6">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-brand-accent/20 rounded-xl flex items-center justify-center"><i class="fa-solid fa-microchip text-2xl md:text-3xl text-brand-accent"></i></div>
+            <h3 class="text-2xl md:text-3xl font-bold">Edge Computing</h3>
+          </div>
+          <div class="text-slate-300 text-base md:text-lg space-y-3 md:space-y-4 font-light">
+            <p><strong class="text-white">Definición:</strong> Procesamiento de datos en el perímetro de la red, físicamente cerca de los sensores/actuadores (Niveles 1-2).</p>
+            <p><strong class="text-white">Beneficios:</strong></p>
+            <ul class="list-disc pl-5 md:pl-6 space-y-1 md:space-y-2">
+              <li>Latencia ultrabaja (respuestas en milisegundos).</li>
+              <li>Reducción drástica del ancho de banda hacia la nube.</li>
+              <li>Mantenimiento de privacidad de datos sensibles localmente.</li>
+              <li>Toma de decisiones crítica ininterrumpida sin internet.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Cloud -->
+        <div class="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md flex flex-col hover:bg-white/10 transition-colors">
+          <div class="flex items-center gap-4 mb-4 md:mb-6">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-500/20 rounded-xl flex items-center justify-center"><i class="fa-solid fa-cloud text-2xl md:text-3xl text-indigo-400"></i></div>
+            <h3 class="text-2xl md:text-3xl font-bold">Cloud Computing</h3>
+          </div>
+          <div class="text-slate-300 text-base md:text-lg space-y-3 md:space-y-4 font-light">
+            <p><strong class="text-white">Definición:</strong> Uso de infraestructuras centralizadas escalables para procesamiento pesado y almacenamiento a largo plazo.</p>
+            <p><strong class="text-white">Aplicaciones IdT:</strong></p>
+            <ul class="list-disc pl-5 md:pl-6 space-y-1 md:space-y-2">
+              <li>Entrenamiento de algoritmos pesados de Machine Learning.</li>
+              <li>Análisis histórico de macrodatos de múltiples plantas.</li>
+              <li>Despliegue de <strong>Gemelos Digitales</strong> complejos.</li>
+              <li>Visualización y dashboards ejecutivos (Nivel 4/5).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="slide-7">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Elementos Físicos y Lógicos</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">Impulsores de la Transición Tecnológica</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 flex-grow">
+        <!-- Sensores -->
+        <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-md border-t-4 border-brand-primary flex flex-col items-center text-center">
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=300&h=200" alt="Sensores Inteligentes" class="w-full h-32 md:h-40 object-cover rounded-xl mb-4 lg:mb-6 shadow-sm">
+          <h3 class="text-xl md:text-2xl font-black text-brand-dark mb-3 lg:mb-4">Sensores Inteligentes</h3>
+          <p class="text-slate-600 text-base md:text-lg leading-relaxed text-left">Evolucionan de señales simples a dispositivos con autodiagnóstico. Protocolos como <strong>IO-Link</strong> permiten transmitir no solo la lectura, sino temperatura interna y desgaste.</p>
+        </div>
+
+        <!-- Pasarelas -->
+        <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-md border-t-4 border-indigo-500 flex flex-col items-center text-center">
+          <img src="https://images.unsplash.com/photo-1614064641913-6b71a2ea9c9e?auto=format&fit=crop&q=80&w=300&h=200" alt="Pasarelas de hardware" class="w-full h-32 md:h-40 object-cover rounded-xl mb-4 lg:mb-6 shadow-sm">
+          <h3 class="text-xl md:text-2xl font-black text-brand-dark mb-3 lg:mb-4">Pasarelas (Gateways)</h3>
+          <p class="text-slate-600 text-base md:text-lg leading-relaxed text-left">El puente crucial entre lo heredado y moderno. Actúan como traductores: leen datos de un PLC usando <strong>Modbus RTU</strong> y los encapsulan en protocolos como <strong>MQTT</strong>.</p>
+        </div>
+
+        <!-- Analitica -->
+        <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-md border-t-4 border-emerald-500 flex flex-col items-center text-center md:col-span-2 lg:col-span-1">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=300&h=200" alt="Analítica de datos" class="w-full h-32 md:h-40 object-cover rounded-xl mb-4 lg:mb-6 shadow-sm">
+          <h3 class="text-xl md:text-2xl font-black text-brand-dark mb-3 lg:mb-4">Analítica Avanzada</h3>
+          <p class="text-slate-600 text-base md:text-lg leading-relaxed text-left">Utilizando algoritmos de IA en el Edge o Cloud, se transforma la telemetría en insights accionables, impulsando el <strong>Mantenimiento Predictivo</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col lg:flex-row bg-white" id="slide-8">
+      <div class="flex-1 min-h-[300px] lg:min-h-full bg-[url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80')] bg-cover bg-center relative">
+        <div class="absolute inset-0 bg-brand-dark/80 mix-blend-multiply"></div>
+        <div class="absolute inset-0 p-8 lg:p-16 flex flex-col justify-end text-white">
+          <i class="fa-solid fa-triangle-exclamation text-4xl md:text-6xl text-brand-danger mb-4 md:mb-6"></i>
+          <h3 class="text-3xl md:text-4xl font-black mb-3 md:mb-4">Superficie de Ataque</h3>
+          <p class="text-lg md:text-xl font-light text-slate-300">Conectar redes previamente aisladas (Air-Gapped) a TI crea nuevas puertas de entrada para actores maliciosos.</p>
+        </div>
+      </div>
+      <div class="flex-1 p-8 lg:p-16 flex flex-col justify-center">
+        <p class="text-brand-danger font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Amenazas en Entornos TO</p>
+        <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 md:mb-10">Vulnerabilidades Estructurales</h2>
+        
+        <div class="space-y-6 md:space-y-8">
+          <div class="border-l-4 border-brand-danger pl-4 md:pl-6 py-2">
+            <h4 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">1. Protocolos Inseguros</h4>
+            <p class="text-base md:text-lg text-slate-600">Protocolos como Modbus y DNP3 asumen redes de confianza física. Carecen de <strong>autenticación o cifrado</strong> nativo, permitiendo inyección de comandos.</p>
+          </div>
+          <div class="border-l-4 border-brand-danger pl-4 md:pl-6 py-2">
+            <h4 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">2. Fin del "Air-Gap"</h4>
+            <p class="text-base md:text-lg text-slate-600">La convergencia IdT elimina la barrera física (Brecha de Aire), abriendo el camino para la <strong>propagación lateral</strong> de malware desde redes corporativas.</p>
+          </div>
+          <div class="border-l-4 border-brand-danger pl-4 md:pl-6 py-2">
+            <h4 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">3. Impacto Ciberfísico</h4>
+            <p class="text-base md:text-lg text-slate-600">A diferencia de TI donde se pierden datos, un ataque en TO altera los procesos físicos, resultando en <strong>riesgo real para vidas humanas</strong> o destrucción material.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="slide-9">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Estrategia de Seguridad</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-10 lg:mb-16">Defensa en Profundidad</h2>
+
+      <div class="flex-grow flex flex-col justify-center items-center relative w-full">
+        <!-- Eje vertical decorativo (oculto en pantallas pequeñas) -->
+        <div class="hidden lg:block absolute top-0 bottom-0 left-1/2 w-2 bg-slate-200 -translate-x-1/2"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-6 lg:gap-y-12 w-full max-w-5xl relative z-10">
+          
+          <!-- Capa 1 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-start gap-4 lg:text-right lg:flex-row-reverse relative">
+             <div class="lg:absolute lg:-right-[72px] lg:top-1/2 lg:-translate-y-1/2 w-12 h-12 bg-sky-500 rounded-full border-4 border-white flex justify-center items-center text-white font-bold text-xl shadow-md shrink-0">1</div>
+             <div class="flex-grow">
+               <h4 class="text-xl font-black text-brand-dark mb-2">1. Perimetral</h4>
+               <p class="text-slate-600">Controles de acceso biométrico a plantas y firewalls robustos entre Internet y la red corporativa.</p>
+             </div>
+             <i class="fa-solid fa-building-shield text-4xl text-sky-500 opacity-20 hidden md:block"></i>
+          </div>
+
+          <!-- Capa 2 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-start gap-4 relative mt-4 lg:mt-12">
+             <div class="lg:absolute lg:-left-[72px] lg:top-1/2 lg:-translate-y-1/2 w-12 h-12 bg-indigo-500 rounded-full border-4 border-white flex justify-center items-center text-white font-bold text-xl shadow-md shrink-0">2</div>
+             <i class="fa-solid fa-network-wired text-4xl text-indigo-500 opacity-20 hidden md:block"></i>
+             <div class="flex-grow">
+               <h4 class="text-xl font-black text-brand-dark mb-2">2. Segmentación / DMZ</h4>
+               <p class="text-slate-600">Firewalls Industriales que entienden protocolos TO y Microsegmentación (VLANs restrictivas).</p>
+             </div>
+          </div>
+
+          <!-- Capa 3 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-start gap-4 lg:text-right lg:flex-row-reverse relative">
+             <div class="lg:absolute lg:-right-[72px] lg:top-1/2 lg:-translate-y-1/2 w-12 h-12 bg-emerald-500 rounded-full border-4 border-white flex justify-center items-center text-white font-bold text-xl shadow-md shrink-0">3</div>
+             <div class="flex-grow">
+               <h4 class="text-xl font-black text-brand-dark mb-2">3. Seguridad Endpoint</h4>
+               <p class="text-slate-600">Gestión de parches en HMIs, endurecimiento (hardening) industrial y control de USBs.</p>
+             </div>
+             <i class="fa-solid fa-laptop-medical text-4xl text-emerald-500 opacity-20 hidden md:block"></i>
+          </div>
+
+          <!-- Capa 4 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-start gap-4 relative mt-4 lg:mt-12">
+             <div class="lg:absolute lg:-left-[72px] lg:top-1/2 lg:-translate-y-1/2 w-12 h-12 bg-amber-500 rounded-full border-4 border-white flex justify-center items-center text-white font-bold text-xl shadow-md shrink-0">4</div>
+             <i class="fa-solid fa-eye text-4xl text-amber-500 opacity-20 hidden md:block"></i>
+             <div class="flex-grow">
+               <h4 class="text-xl font-black text-brand-dark mb-2">4. Monitoreo (DPI)</h4>
+               <p class="text-slate-600">Sistemas de Detección (IDS) con capacidad pasiva que analizan anomalías mediante Deep Packet Inspection.</p>
+             </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 bg-slate-900" id="slide-10">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
+        <div>
+          <p class="text-brand-accent font-extrabold text-xs md:text-sm tracking-widest uppercase mb-1">Laboratorio Virtual Interactivo</p>
+          <h2 class="text-2xl md:text-4xl font-black text-white">Simulador IdT: Sensor > Edge > Cloud</h2>
+        </div>
+        <button id="sim-btn" onclick="toggleSimulation()" class="bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 px-6 md:px-8 rounded-full transition-colors text-base md:text-lg shadow-lg w-full md:w-auto">
+          <i class="fa-solid fa-play mr-2"></i> Iniciar
+        </button>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-6 flex-grow items-stretch relative">
+        
+        <!-- Flechas animadas (ocultas en móvil) -->
+        <div class="hidden lg:block absolute top-1/2 left-[28%] w-[15%] h-1 bg-sky-500/30 -translate-y-1/2 z-0 overflow-hidden">
+           <div id="data-flow-1" class="h-full bg-sky-400 w-1/4 transform -translate-x-full hidden transition-transform duration-500"></div>
+        </div>
+        <div class="hidden lg:block absolute top-1/2 left-[62%] w-[15%] h-1 bg-indigo-500/30 -translate-y-1/2 z-0 overflow-hidden">
+           <div id="data-flow-2" class="h-full bg-indigo-400 w-1/4 transform -translate-x-full hidden transition-transform duration-500"></div>
+        </div>
+
+        <!-- 1. Entorno TO -->
+        <div class="flex-1 bg-slate-800 rounded-2xl border-2 border-slate-700 p-4 md:p-6 flex flex-col items-center relative z-10 shadow-2xl">
+          <h3 class="text-lg md:text-xl font-bold text-slate-300 mb-4 md:mb-6 w-full text-center border-b border-slate-700 pb-2">Planta Industrial</h3>
+          
+          <div class="w-32 h-32 md:w-48 md:h-48 bg-slate-700 rounded-full border-4 md:border-8 border-slate-600 flex flex-col items-center justify-center relative overflow-hidden mt-2 md:mt-4" id="furnace-ui">
+            <i class="fa-solid fa-fire text-orange-500 text-3xl md:text-4xl mb-1 md:mb-2" id="fire-icon" style="opacity: 0.3;"></i>
+            <span class="text-3xl md:text-4xl font-black text-white font-mono" id="temp-display">25<span class="text-lg md:text-xl">°C</span></span>
+            <span class="text-[10px] md:text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">Horno</span>
+            <div class="absolute bottom-0 left-0 w-full bg-orange-600 transition-all duration-300 opacity-50" id="heat-bar" style="height: 5%;"></div>
+          </div>
+          
+          <div class="mt-4 md:mt-8 text-center bg-slate-900/50 p-3 md:p-4 rounded-xl w-full border border-slate-700">
+            <p class="text-xs md:text-sm text-slate-400 font-bold mb-1">Sensor PT100</p>
+            <p class="text-[10px] md:text-xs text-slate-500 font-mono">Lectura continua analógica</p>
+          </div>
+        </div>
+
+        <!-- 2. Gateway Edge -->
+        <div class="flex-1 lg:flex-[0.8] bg-slate-800 rounded-2xl border-2 border-slate-700 p-4 md:p-6 flex flex-col items-center justify-center relative z-10 shadow-2xl transition-all duration-300" id="edge-gateway">
+          <h3 class="text-lg md:text-xl font-bold text-slate-300 mb-4 w-full text-center border-b border-slate-700 pb-2 lg:absolute lg:top-6">Edge Gateway</h3>
+          
+          <i class="fa-solid fa-server text-4xl md:text-6xl text-sky-500 mb-2 md:mb-4 lg:mt-12" id="gateway-icon"></i>
+          <p class="text-base md:text-lg font-bold text-white mb-2" id="edge-status">En Espera</p>
+          
+          <div class="w-full text-left bg-slate-900 p-2 md:p-3 rounded-lg font-mono text-[10px] md:text-xs text-sky-300 mb-2 overflow-hidden h-20 md:h-24 relative">
+             <div id="edge-log" class="absolute bottom-2 left-2 flex flex-col justify-end">
+               <span class="opacity-50">Esperando conexión...</span>
+             </div>
+          </div>
+          <p class="text-[9px] md:text-[10px] text-slate-500 text-center">Analítica Local Evaluando Umbral (500°C)</p>
+        </div>
+
+        <!-- 3. Nube / Dashboard -->
+        <div class="flex-1 bg-slate-800 rounded-2xl border-2 border-slate-700 p-4 md:p-6 flex flex-col relative z-10 shadow-2xl">
+          <h3 class="text-lg md:text-xl font-bold text-slate-300 mb-4 md:mb-6 w-full text-center border-b border-slate-700 pb-2">Cloud Dashboard</h3>
+          
+          <div class="flex-grow flex flex-col justify-between">
+            <div class="bg-slate-900 rounded-xl border border-slate-700 h-24 md:h-32 p-2 md:p-3 relative flex items-end overflow-hidden" id="chart-area">
+              <!-- Barras -->
+            </div>
+            
+            <div class="bg-slate-900 rounded-xl border border-slate-700 p-3 md:p-4 mt-4 flex items-center justify-between transition-colors duration-300" id="cloud-alert-panel">
+               <div>
+                 <p class="text-[10px] md:text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Estado</p>
+                 <p class="text-sm md:text-xl font-black text-emerald-400" id="cloud-status-text">NORMAL</p>
+               </div>
+               <i class="fa-solid fa-check-circle text-2xl md:text-4xl text-emerald-400" id="cloud-status-icon"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slide flex flex-col justify-center items-center text-center p-8 md:p-16 bg-brand-dark" id="slide-11">
+      <i class="fa-solid fa-check-circle text-5xl md:text-6xl text-brand-accent mb-6 md:mb-8"></i>
+      <h1 class="text-5xl md:text-8xl font-black text-white mb-4 md:mb-6">¿Preguntas?</h1>
+      <p class="text-lg md:text-2xl text-slate-400 font-semibold mb-10 md:mb-12">
+        Fin de la Unidad 4: Transición a IdT
+      </p>
+      
+      <div class="bg-slate-800 p-4 md:p-6 rounded-2xl border border-slate-700 max-w-2xl text-left flex flex-col md:flex-row gap-4 md:gap-6 items-center">
+        <i class="fa-solid fa-book-open-reader text-3xl md:text-4xl text-brand-primary"></i>
+        <div class="text-center md:text-left">
+          <h4 class="text-lg md:text-xl font-bold text-white mb-1">Siguientes pasos:</h4>
+          <p class="text-sm md:text-base text-slate-400">Revisar los casos de estudio sobre Gemelos Digitales en el foro.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- Lógica de Navegación ---
+    let currentSlide = 1;
+    const totalSlides = 11;
+    
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+      const activeSlide = document.getElementById(`slide-${currentSlide}`);
+      if(activeSlide) activeSlide.classList.add('active');
+      
+      document.getElementById('slide-counter').innerText = `${currentSlide} / ${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${((currentSlide - 1) / (totalSlides - 1)) * 100}%`;
+      
+      if(currentSlide !== 10 && simInterval) stopSimulation();
+    }
+
+    function nextSlide() { if(currentSlide < totalSlides) { currentSlide++; updateSlide(); } }
+    function prevSlide() { if(currentSlide > 1) { currentSlide--; updateSlide(); } }
+    
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if(e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // --- Lógica Simulador ---
+    let simInterval = null, isSimulating = false, temperature = 25, trend = 1;
+    let chartData = Array(15).fill(25);
+
+    function toggleSimulation() {
+      const btn = document.getElementById('sim-btn');
+      if(isSimulating) {
+        stopSimulation();
+        btn.innerHTML = '<i class="fa-solid fa-play mr-2"></i> Iniciar';
+        btn.classList.replace('bg-red-500', 'bg-brand-accent');
+        btn.classList.replace('hover:bg-red-400', 'hover:bg-sky-400');
+        btn.classList.replace('text-white', 'text-brand-dark');
+      } else {
+        startSimulation();
+        btn.innerHTML = '<i class="fa-solid fa-stop mr-2"></i> Detener';
+        btn.classList.replace('bg-brand-accent', 'bg-red-500');
+        btn.classList.replace('hover:bg-sky-400', 'hover:bg-red-400');
+        btn.classList.replace('text-brand-dark', 'text-white');
+      }
+    }
+
+    function stopSimulation() {
+      clearInterval(simInterval); isSimulating = false;
+      document.getElementById('fire-icon').style.opacity = '0.3';
+      document.getElementById('edge-status').innerText = 'En Espera';
+      document.getElementById('edge-status').className = 'text-lg font-bold text-white mb-2';
+      document.getElementById('edge-gateway').classList.remove('alert-state');
+      resetCloudUI();
+      document.getElementById('data-flow-1')?.classList.add('hidden');
+      document.getElementById('data-flow-2')?.classList.add('hidden');
+    }
+
+    function startSimulation() {
+      isSimulating = true; temperature = 25;
+      document.getElementById('fire-icon').style.opacity = '1';
+      document.getElementById('edge-log').innerHTML = '';
+      
+      const f1 = document.getElementById('data-flow-1');
+      const f2 = document.getElementById('data-flow-2');
+      if(f1 && f2) {
+        f1.classList.remove('hidden'); f2.classList.remove('hidden');
+        f1.style.animation = "slideRight 1s infinite linear";
+        f2.style.animation = "slideRight 1.5s infinite linear";
+      }
+      simInterval = setInterval(updateSimulationTick, 600);
+    }
+
+    function updateSimulationTick() {
+      if(temperature < 520 && trend > 0) temperature += Math.floor(Math.random() * 40) + 15;
+      else {
+        trend = -1; temperature -= Math.floor(Math.random() * 20) + 5;
+        if(temperature < 100) trend = 1;
+      }
+      
+      document.getElementById('temp-display').innerHTML = `${temperature}<span class="text-xl">°C</span>`;
+      document.getElementById('heat-bar').style.height = `${Math.min((temperature/600)*100, 100)}%`;
+      
+      const fireIcon = document.getElementById('fire-icon');
+      fireIcon.className = `fa-solid fa-fire text-4xl mb-2 ${temperature > 400 ? 'text-red-500' : 'text-orange-500'}`;
+      
+      chartData.push(temperature); chartData.shift(); updateChartUI();
+      const isCritical = temperature >= 500;
+      updateEdgeUI(temperature, isCritical); updateCloudUI(isCritical);
+    }
+
+    function updateEdgeUI(temp, isCritical) {
+      const logContainer = document.getElementById('edge-log');
+      const p = document.createElement('div');
+      p.innerText = `[MQTT] T=${temp}°C | ${isCritical?'ERR':'OK'}`;
+      p.className = isCritical ? 'text-red-400 font-bold' : 'text-sky-300';
+      logContainer.appendChild(p);
+      if(logContainer.children.length > 4) logContainer.removeChild(logContainer.firstChild);
+
+      const gateway = document.getElementById('edge-gateway');
+      const statusText = document.getElementById('edge-status');
+      const icon = document.getElementById('gateway-icon');
+
+      if(isCritical) {
+        gateway.classList.add('alert-state');
+        statusText.innerText = '¡ALERTA!';
+        statusText.className = 'text-lg font-bold text-red-500 mb-2';
+        icon.className = 'fa-solid fa-server text-4xl md:text-6xl text-red-500 mb-2 md:mb-4 lg:mt-12';
+      } else {
+        gateway.classList.remove('alert-state');
+        statusText.innerText = 'Normal';
+        statusText.className = 'text-lg font-bold text-sky-400 mb-2';
+        icon.className = 'fa-solid fa-server text-4xl md:text-6xl text-sky-500 mb-2 md:mb-4 lg:mt-12';
+      }
+    }
+
+    function updateCloudUI(isCritical) {
+      const panel = document.getElementById('cloud-alert-panel');
+      const text = document.getElementById('cloud-status-text');
+      const icon = document.getElementById('cloud-status-icon');
+
+      if(isCritical) {
+        panel.className = 'bg-red-900/40 rounded-xl border border-red-500 p-3 md:p-4 mt-4 flex items-center justify-between transition-colors duration-300';
+        text.innerText = '¡CRÍTICO!'; text.className = 'text-sm md:text-xl font-black text-red-500 animate-pulse';
+        icon.className = 'fa-solid fa-triangle-exclamation text-2xl md:text-4xl text-red-500 animate-pulse';
+      } else resetCloudUI();
+    }
+
+    function resetCloudUI() {
+      const panel = document.getElementById('cloud-alert-panel');
+      const text = document.getElementById('cloud-status-text');
+      const icon = document.getElementById('cloud-status-icon');
+      panel.className = 'bg-slate-900 rounded-xl border border-slate-700 p-3 md:p-4 mt-4 flex items-center justify-between transition-colors duration-300';
+      text.innerText = 'NORMAL'; text.className = 'text-sm md:text-xl font-black text-emerald-400';
+      icon.className = 'fa-solid fa-check-circle text-2xl md:text-4xl text-emerald-400';
+    }
+
+    function updateChartUI() {
+      const area = document.getElementById('chart-area');
+      area.innerHTML = '';
+      chartData.forEach(val => {
+        const heightPercent = Math.max((val / 600) * 100, 5);
+        const bar = document.createElement('div');
+        bar.className = `flex-1 mx-0.5 rounded-t-sm opacity-80 transition-all duration-300 ${val >= 500 ? 'bg-red-500' : 'bg-sky-500'}`;
+        bar.style.height = `${heightPercent}%`;
+        area.appendChild(bar);
+      });
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes slideRight { 0% { transform: translateX(-100%); opacity: 0;} 50% { opacity: 1; } 100% { transform: translateX(400%); opacity: 0; } }`;
+    document.head.appendChild(style);
+    updateChartUI();
+  </script>
+</body>
+</html>
