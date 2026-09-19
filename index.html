@@ -97,7 +97,160 @@
       <div id="progress-bar" class="h-full bg-brand-accent transition-all duration-300 w-0"></div>
     </div>
 
-    <div class="slide active flex flex-col justify-center items-center text-center p-6 md:p-16 bg-brand-dark" id="slide-1">
+    <!-- UNIDAD 3 - DIAPOSITIVAS BASADAS EN IoE.pdf -->
+    <div class="slide active flex flex-col justify-center items-center text-center p-6 md:p-16 bg-brand-dark" id="u3-slide-1">
+      <p class="text-brand-accent font-extrabold text-sm md:text-xl mb-6 tracking-widest uppercase">Unidad 3</p>
+      <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight max-w-5xl">Cómo conectar<br>lo que no está conectado</h1>
+      <p class="text-lg md:text-2xl text-slate-400 max-w-4xl font-semibold leading-relaxed">
+        Aprenderemos los tipos de conexión, configuración básica de microcontroladores (como el ESP32), fundamentos de programación de sensores y los protocolos necesarios para transmitir datos a la nube de manera segura.
+      </p>
+      <div class="w-24 h-1.5 bg-brand-accent mt-12 rounded-full"></div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="u3-slide-2">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Redes para IdT</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">Tipos de Conexión Inalámbrica</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 flex-grow">
+        <!-- WiFi -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-sky-100 rounded-xl flex items-center justify-center text-brand-primary text-2xl mb-4 md:mb-6"><i class="fa-solid fa-wifi"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3">WiFi</h3>
+          <p class="text-slate-600 text-base flex-grow">El más común en dispositivos domésticos (cámaras, smart TVs). Ofrece un gran ancho de banda pero consume mucha energía, por lo que no es ideal para baterías pequeñas.</p>
+        </div>
+        <!-- BLE -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-2xl mb-4 md:mb-6"><i class="fa-brands fa-bluetooth"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3">Bluetooth (BLE)</h3>
+          <p class="text-slate-600 text-base flex-grow">Bluetooth Low Energy. Excelente para dispositivos que dependen de baterías a corta distancia, como smartbands y sensores médicos portátiles.</p>
+        </div>
+        <!-- Zigbee -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 text-2xl mb-4 md:mb-6"><i class="fa-solid fa-diagram-project"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3">Zigbee</h3>
+          <p class="text-slate-600 text-base flex-grow">Estándar ampliamente usado en domótica (focos, asistentes). Permite formar redes en malla (mesh) de muy bajo consumo energético.</p>
+        </div>
+        <!-- LoRaWAN -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600 text-2xl mb-4 md:mb-6"><i class="fa-solid fa-tower-cell"></i></div>
+          <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-3">LoRaWAN</h3>
+          <p class="text-slate-600 text-base flex-grow">Transmisión de baja velocidad, pero ideal para sensores en zonas rurales o industriales que deben enviar datos a varios kilómetros de distancia.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-white" id="u3-slide-3">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Primeros Pasos y Amenazas</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">Configuración Inicial y Riesgos</h2>
+      
+      <div class="flex flex-col lg:flex-row gap-8 h-full items-stretch">
+        <div class="flex-1 bg-slate-50 p-6 md:p-10 rounded-2xl border-l-8 border-brand-primary flex flex-col justify-center">
+          <h3 class="text-2xl font-black text-brand-dark mb-4">¿Qué implica configurar un objeto?</h3>
+          <p class="text-slate-600 text-lg md:text-xl mb-6">Al implementar una solución IoT con hardware como <strong>ESP32 o Raspberry Pi</strong>, la configuración básica requiere:</p>
+          <ul class="space-y-4 text-slate-600 text-lg">
+            <li class="flex items-center gap-3"><i class="fa-solid fa-wifi text-brand-primary"></i> Asignar credenciales de red (SSID/Password).</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-network-wired text-brand-primary"></i> Configurar su dirección (IP estática o dinámica).</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-cloud-arrow-up text-brand-primary"></i> Definir cómo y a qué servidor (ej. API en la nube) enviará los datos.</li>
+          </ul>
+        </div>
+        
+        <div class="flex-1 bg-red-50 border border-red-200 p-8 rounded-2xl flex flex-col justify-center shadow-sm">
+          <div class="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center font-black text-2xl mb-6 shadow-md"><i class="fa-solid fa-skull-crossbones"></i></div>
+          <h4 class="text-2xl font-bold text-red-700 mb-3">El Peligro del "admin/admin"</h4>
+          <p class="text-slate-700 text-lg mb-4">El primer gran problema de seguridad de IoT. Muchos dispositivos salen de fábrica con usuarios por defecto. Si no se cambian, el dispositivo queda totalmente vulnerable desde Internet.</p>
+          <div class="bg-white p-4 rounded-lg border border-red-200">
+            <p class="text-sm font-bold text-slate-800 mb-1">Caso Histórico: Botnet Mirai (2016)</p>
+            <p class="text-sm text-slate-600">Este malware buscó dispositivos conectados con credenciales por defecto, los infectó y convirtió miles de cámaras IP en una red zombie para lanzar ataques de Denegación de Servicio (DDoS).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-dark" id="u3-slide-4">
+      <p class="text-brand-accent font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Lógica y Lenguajes</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-8 lg:mb-12">Fundamentos de Programación IoT</h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-grow">
+         <!-- Ciclo de programa -->
+         <div class="bg-slate-800 border border-slate-700 p-8 rounded-2xl flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-white mb-6">El Bucle del Script (Loop)</h3>
+            <p class="text-slate-400 mb-6">Un programa IoT no suele ser muy complejo en estructura, pero sí crítico. Consiste en automatizar estos tres pasos:</p>
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold shrink-0">1</div>
+                <div>
+                  <h4 class="text-xl font-bold text-brand-accent">Leer Datos</h4>
+                  <p class="text-slate-400">Capturar valores del mundo físico (ej. Sensor DHT22 de humedad).</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold shrink-0">2</div>
+                <div>
+                  <h4 class="text-xl font-bold text-indigo-300">Procesar</h4>
+                  <p class="text-slate-400">Usar condicionales en el código. Ej: <code>if (temp > 30) { alerta(); }</code></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold shrink-0">3</div>
+                <div>
+                  <h4 class="text-xl font-bold text-emerald-300">Enviar / Actuar</h4>
+                  <p class="text-slate-400">Mandar la métrica a un dashboard en la nube o accionar un elemento físico.</p>
+                </div>
+              </div>
+            </div>
+         </div>
+
+         <!-- Lenguajes -->
+         <div class="bg-slate-800 border border-slate-700 p-8 rounded-2xl flex flex-col justify-center">
+           <h3 class="text-2xl font-bold text-white mb-6">Lenguajes de Programación</h3>
+           <div class="space-y-4">
+             <div class="bg-slate-900 p-4 rounded-xl border border-slate-600">
+               <h4 class="text-lg font-bold text-white"><i class="fa-solid fa-code text-brand-accent mr-2"></i>C / C++ (Arduino IDE)</h4>
+               <p class="text-sm text-slate-400 mt-1">El más popular para hardware (Arduino, ESP32). Es simple pero permite un control directo de pines mediante librerías.</p>
+             </div>
+             <div class="bg-slate-900 p-4 rounded-xl border border-slate-600">
+               <h4 class="text-lg font-bold text-white"><i class="fa-brands fa-python text-brand-accent mr-2"></i>Python (MicroPython)</h4>
+               <p class="text-sm text-slate-400 mt-1">Lenguaje muy versátil usado en placas como Raspberry Pi Pico. Ideal para prototipado rápido e integraciones en la nube.</p>
+             </div>
+             <div class="bg-slate-900 p-4 rounded-xl border border-slate-600">
+               <h4 class="text-lg font-bold text-white"><i class="fa-brands fa-js text-brand-accent mr-2"></i>JavaScript (Node.js)</h4>
+               <p class="text-sm text-slate-400 mt-1">Utilizado masivamente para construir paneles de control, servidores y herramientas lógicas visuales como <strong>Node-RED</strong>.</p>
+             </div>
+           </div>
+         </div>
+      </div>
+    </div>
+
+    <div class="slide flex flex-col p-6 md:p-12 lg:p-16 bg-brand-light" id="u3-slide-5">
+      <p class="text-brand-primary font-extrabold text-sm md:text-lg mb-2 tracking-widest uppercase">Protocolos y Cifrado</p>
+      <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-8 lg:mb-12">Cómo hablan las máquinas</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 flex-grow">
+         <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-sky-500">
+           <h3 class="text-xl font-black text-brand-dark mb-2">MQTT</h3>
+           <p class="text-slate-600">El estándar ligero de IoT. Usa un modelo de Publicar/Suscribir a través de un <i>Broker</i> central. Es ideal para enviar datos desde sensores con escasos recursos.</p>
+         </div>
+         <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-indigo-500">
+           <h3 class="text-xl font-black text-brand-dark mb-2">HTTP / HTTPS</h3>
+           <p class="text-slate-600">El protocolo web tradicional. Ocupa más ancho de banda pero es útil para plataformas API (ej. ThingSpeak) para grabar datos directamente con peticiones GET/POST.</p>
+         </div>
+         <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-emerald-500">
+           <h3 class="text-xl font-black text-brand-dark mb-2">CoAP</h3>
+           <p class="text-slate-600">Constrained Application Protocol. Diseñado para IoT de extremadamente bajo consumo; emplea UDP en lugar de TCP para minimizar la carga de red.</p>
+         </div>
+      </div>
+
+      <div class="bg-amber-50 border-l-8 border-amber-500 p-6 rounded-2xl mt-8 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+        <i class="fa-solid fa-user-secret text-5xl text-amber-500"></i>
+        <div>
+          <h4 class="text-2xl font-black text-brand-dark mb-2">Seguridad Básica en Tránsito</h4>
+          <p class="text-slate-700 text-lg">Transmitir datos por HTTP envía la información en <strong>texto plano</strong>. Cualquiera que intercepte la red wifi (Sniffing) puede leer métricas o contraseñas. Para garantizar confidencialidad, las transmisiones IoT siempre deben ir cifradas usando capas como <strong>TLS/SSL</strong> (empleando HTTPS o MQTTS).</p>
+        </div>
+      </div>
+    </div>
+    <!-- FIN DE DIAPOSITIVAS UNIDAD 3 -->
+
+    <div class="slide flex flex-col justify-center items-center text-center p-6 md:p-16 bg-brand-dark" id="slide-1">
       <p class="text-brand-accent font-extrabold text-sm md:text-xl mb-6 tracking-widest uppercase">Fundamentos Teóricos y Prácticos</p>
       <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight max-w-5xl">Transición a la <br>Industria de las Cosas (IdT)</h1>
       <p class="text-lg md:text-2xl text-slate-400 max-w-4xl font-semibold leading-relaxed">
@@ -570,17 +723,48 @@
   <script>
     // --- Lógica de Navegación ---
     let currentSlide = 1;
-    const totalSlides = 11;
+    let slides = [];
+    let totalSlides = 0;
     
-    function updateSlide() {
-      document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
-      const activeSlide = document.getElementById(`slide-${currentSlide}`);
-      if(activeSlide) activeSlide.classList.add('active');
+    document.addEventListener("DOMContentLoaded", () => {
+      // Capturamos dinámicamente cuántas slides existen (Unidad 3 + Unidad 4)
+      slides = Array.from(document.querySelectorAll('.slide'));
+      totalSlides = slides.length;
       
+      // Limpiamos las clases 'active' estáticas y configuramos la primera
+      slides.forEach(s => s.classList.remove('active'));
+      if(slides.length > 0) slides[0].classList.add('active');
+      
+      updateSlideUI();
+    });
+
+    function updateSlide() {
+      if (slides.length === 0) {
+         slides = Array.from(document.querySelectorAll('.slide'));
+         totalSlides = slides.length;
+      }
+      
+      slides.forEach((el, index) => {
+        if(index === currentSlide - 1) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+      
+      updateSlideUI();
+    }
+    
+    function updateSlideUI() {
       document.getElementById('slide-counter').innerText = `${currentSlide} / ${totalSlides}`;
       document.getElementById('progress-bar').style.width = `${((currentSlide - 1) / (totalSlides - 1)) * 100}%`;
       
-      if(currentSlide !== 10 && simInterval) stopSimulation();
+      // Detenemos el simulador si navegamos a una diapositiva que no contiene el simulador
+      const currentSlideEl = slides[currentSlide - 1];
+      const hasSim = currentSlideEl ? currentSlideEl.querySelector('#sim-btn') : null;
+      if(!hasSim && typeof isSimulating !== 'undefined' && isSimulating) {
+        stopSimulation();
+      }
     }
 
     function nextSlide() { if(currentSlide < totalSlides) { currentSlide++; updateSlide(); } }
